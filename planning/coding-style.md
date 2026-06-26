@@ -21,3 +21,16 @@ General:
 code like a never-nester unless necessary.
 
 explain why a function/class does what it does.
+
+
+File Stricture:
+
+Module Imports
+
+Variables
+
+Functions
+
+Classes
+
+Execution
