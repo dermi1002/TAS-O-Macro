@@ -1,5 +1,6 @@
 import argparse
 import frameadvance
+import keyboardaction
 
 
 def add_commands():
@@ -22,7 +23,7 @@ def add_commands():
 
     print(args.framerate, args.process, args.arch, args.userkey)
 
-    # frameadvance.keyboard_action(args.userkey)
+    keyboardaction.keyboard_listener(args.userkey)
 
 def main():
     add_commands()
