@@ -5,7 +5,22 @@ import time
 
 speedhackClient = None
 
+canSpeedhack: bool = True
+
 # functions here
+
+def check_speedhack_condition():
+    print("Is speedhack on:", canSpeedhack, '\n')
+
+def enable_speedhack():
+    global canSpeedhack
+    canSpeedhack = True
+    check_speedhack_condition()
+
+def disable_speedhack():
+    global canSpeedhack
+    canSpeedhack = False
+    check_speedhack_condition()
 
 def define_process(process, arch):
     speedhackClient = xsh.Client(process, arch=arch)
@@ -21,9 +36,11 @@ def resume_time():
     speedhackClient.set_speed(1.0)
 
 def advance_frame():
-    resume_time()
-    wait_one_frame()
-    stop_time()
+    if canSpeedhack:
+        resume_time()
+        wait_one_frame()
+        stop_time()
+        disable_speedhack()
 
 # execution
 

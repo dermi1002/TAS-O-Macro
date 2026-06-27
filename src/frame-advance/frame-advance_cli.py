@@ -34,7 +34,12 @@ def add_commands():
 
     args = parser.parse_args()
 
-    print(args.framerate, args.process, args.arch, args.userkey)
+    print(
+        "Framerate:", args.framerate,
+        "Process:", args.process,
+        "Process' Arch:", args.arch,
+        "User-defined Key", args.userkey
+    )
 
     keyboardaction.keyboard_listener(args.userkey)
 
