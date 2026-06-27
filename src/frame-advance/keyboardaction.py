@@ -1,31 +1,19 @@
 from pynput import keyboard
 
-def call_frame_advance(userKey: str):
-    if key == keyboard.KeyCode.from_char(userKey):
-        print('placeholder frame advance function')
-
-def on_press(key):
-    try:
-        print('alphanumeric key {0} pressed'.format(
-            key.char))
-    except AttributeError:
-        print('special key {0} pressed'.format(
-            key))
-
-    call_frame_advance
+def call_frame_advance(userKey: str): # i might have to move all this to the cli. wish i didn't tho.
+    print("aaa")
+    def on_press(key):
+        if key == keyboard.KeyCode.from_char(userKey):
+            print('placeholder frame advance function')
 
 def on_release(key):
-    print( '{0} released'.format(key) )
-
     if key == keyboard.Key.esc:
-        # Stop listener
+        print("Quitting...")
         return False
 
 def keyboard_listener(userKey):
-    userKey = userKey
-
     listener = keyboard.Listener(
-        on_press = on_press,
+        on_press = call_frame_advance(userKey),
         on_release = on_release
     )
 
