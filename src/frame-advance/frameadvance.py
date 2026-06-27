@@ -1,4 +1,3 @@
-# import keyboard as kb
 import xspeedhack as xsh
 import time
 
@@ -25,11 +24,6 @@ def advance_frame():
     resume_time()
     wait_one_frame()
     stop_time()
-
-def keyboard_action(userKey: str): # will have to separate this into a different script
-    while True:
-        kb.wait(userKey)
-        print('the user defined key is pressed')
 
 # execution
 
