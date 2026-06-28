@@ -1,8 +1,3 @@
-import vgamepad as vg
-import pymem as pm
-import xspeedhack as xsh
-
-
 def main():
     print("TAS-O-Macro")
 
