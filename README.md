@@ -11,15 +11,15 @@ frame advance:
 
 - [x] write code for it
 
-- [ ] test it on windows
+- [x] test it on windows
 
 - [ ] create python bindings for linux speedhack library (to be hosted on a different repo)
 
 tas input:
 
-- [ ] decide a gui library for it
-
 - [ ] write code for it
+
+- [ ] decide a gui library for it
 
 - [ ] test
 
