@@ -17,9 +17,9 @@ frame advance:
 
 tas input:
 
-- [ ] write code for it
+- [x] decide a gui library for it (PyQt6)
 
-- [ ] decide a gui library for it
+- [ ] write code for it
 
 - [ ] test
 
