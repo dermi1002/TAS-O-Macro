@@ -57,6 +57,7 @@ class ButtonWidget(QWidget):
         self.setWindowTitle("TAS Input")
 
         self.testButtonCheck = button_checkbox(self, "A", inputaction.faceA, 20, 20)
+        self.testTwoButtonCheck = button_checkbox(self, "B", inputaction.faceB, 60, 20)
         # self.testButtonCheck = ButtonCheckBox("A")
 
         self.show()
@@ -74,7 +75,7 @@ class MainWindow(QMainWindow):
         self.show()
 
 def main():
-    inputaction.initialize_gamepad
+    inputaction.initialize_gamepad()
 
     app = QApplication(sys.argv)
     window = ButtonWidget(None)
