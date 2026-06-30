@@ -2,6 +2,8 @@ TAS INPUT GUI:
 
 basically steal dolphin's tas input gui and modify it to suit for xbox360 virtual controller
 
+GUI library: PyQt6
+
 note:
 
 columns separated by semicolin (;)
