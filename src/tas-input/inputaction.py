@@ -23,6 +23,7 @@ thumbButtonLeft = vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB
 thumbButtonRight = vg.XUSB_BUTTON.XUSB_GAMEPAD_RIGHT_THUMB
 
 def initialize_gamepad():
+    global gamepad
     gamepad = vg.VX360Gamepad()
 
 def press_button(button):
@@ -32,3 +33,9 @@ def press_button(button):
 def release_button(button):
     gamepad.release_button(button=button)
     gamepad.update()
+
+def main():
+    print("This is a module and is not meant to be executed as a standalone script.")
+
+if __name__ == '__main__':
+    main()

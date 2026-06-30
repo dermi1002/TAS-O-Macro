@@ -1,1 +1,2 @@
+PyQt6
 vgamepad==0.1.0

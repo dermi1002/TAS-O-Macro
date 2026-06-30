@@ -16,37 +16,24 @@ import inputaction
 
 # class JoystickFrame()
 
-class ButtonCheckBox(QCheckBox):
-    def __init__(self, label, *args, **kwargs):
-    # def __init__(self, parent, label: str, button):
-        super().__init__(label, *args, **kwargs)
-        # super().__init__(parent, label, button)
+class ButtonCheckBox(QCheckBox): # you should've seen my face when this finally worked
+    def __init__(self, button, text, parent, **kwargs):
+        super().__init__(parent, **kwargs)
 
-        self.label = label
-        # self.button = button
+        self.text = text
 
-        # self.stateChanged.connect( self.input_action(button) )
+        self.button = button
 
-    # def input_action(button):
-    #     if self.setChecked == True:
-    #         inputaction.press_button(button)
+        self.setText(self.text)
 
-    #     if self.setChecked == False:
-    #         inputaction.release_button(button)
+        self.stateChanged.connect( self.input_action )
 
-def button_checkbox(parent, label: str, button, moveX: int, moveY: int):
-    widget = QCheckBox(label, parent=parent)
+    def input_action(self, state):
+        if state == Qt.CheckState.Checked.value:
+            inputaction.press_button(self.button)
 
-    widget.move(moveX, moveY)
-
-    widget.stateChanged.connect( lambda: input_action(button) ) 
-
-    def input_action(button):
-        if widget.setChecked == True:
-            inputaction.press_button(button)
-
-        if widget.setChecked == False:
-           inputaction.release_button(button)
+        else:
+            inputaction.release_button(self.button)
 
 class ButtonWidget(QWidget):
     def __init__(self, *args, **kwargs):
@@ -56,9 +43,17 @@ class ButtonWidget(QWidget):
         self.setFixedSize( QSize(400, 300) )
         self.setWindowTitle("TAS Input")
 
-        self.testButtonCheck = button_checkbox(self, "A", inputaction.faceA, 20, 20)
-        self.testTwoButtonCheck = button_checkbox(self, "B", inputaction.faceB, 60, 20)
-        # self.testButtonCheck = ButtonCheckBox("A")
+        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceA, "A", self)
+        self.testClassButtonCheck.move(50, 80)
+
+        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceB, "B", self)
+        self.testClassButtonCheck.move(80, 50)
+
+        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceX, "X", self)
+        self.testClassButtonCheck.move(20, 50)
+
+        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceY, "Y", self)
+        self.testClassButtonCheck.move(50, 20)
 
         self.show()
 
