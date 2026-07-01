@@ -12,9 +12,12 @@ from PyQt6.QtWidgets import (
 
 import sys
 
-import inputaction
+import inputaction as ia
 
-# class JoystickFrame()
+
+
+
+# class JoystickFrame(QSlider)
 
 class ButtonCheckBox(QCheckBox): # you should've seen my face when this finally worked
     def __init__(self, button, text, parent, **kwargs):
@@ -30,10 +33,10 @@ class ButtonCheckBox(QCheckBox): # you should've seen my face when this finally 
 
     def input_action(self, state):
         if state == Qt.CheckState.Checked.value:
-            inputaction.press_button(self.button)
+            ia.press_button(self.button)
 
         else:
-            inputaction.release_button(self.button)
+            ia.release_button(self.button)
 
 class ButtonWidget(QWidget):
     def __init__(self, *args, **kwargs):
@@ -43,19 +46,72 @@ class ButtonWidget(QWidget):
         self.setFixedSize( QSize(400, 300) )
         self.setWindowTitle("TAS Input")
 
-        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceA, "A", self)
-        self.testClassButtonCheck.move(50, 80)
+        # Widget Layout
 
-        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceB, "B", self)
-        self.testClassButtonCheck.move(80, 50)
+        gapRow: int = 27
 
-        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceX, "X", self)
-        self.testClassButtonCheck.move(20, 50)
+        buttonLayoutStart: int = 160
 
-        self.testClassButtonCheck = ButtonCheckBox(inputaction.faceY, "Y", self)
-        self.testClassButtonCheck.move(50, 20)
+        menuButtonPosition: int = 190
+
+        self.dPadDirections = self.four_button_checkbox_layout(
+            self, 20, buttonLayoutStart,
+            ia.thumbButtonLeft,  "L-Stick",
+            ia.bumperLeft,  "LB",
+            ia.dpadUp,      "D-Up",
+            ia.dpadLeft,    "D-Left",
+            ia.dpadDown,    "D-Down",
+            ia.dpadRight,   "D-Right"
+        )
+
+        self.startButton = ButtonCheckBox(ia.menuStart, "Start", self)
+        self.startButton.move(menuButtonPosition, buttonLayoutStart + gapRow)
+
+        self.backButton = ButtonCheckBox(ia.menuBack, "Back", self)
+        self.backButton.move(menuButtonPosition, buttonLayoutStart + int(gapRow * 2))
+
+        self.faceButtons = self.four_button_checkbox_layout(
+            self, 270, buttonLayoutStart,
+            ia.thumbButtonRight,  "R-Stick",
+            ia.bumperRight, "RB",
+            ia.faceY, "Y",
+            ia.faceX, "X",
+            ia.faceA, "A",
+            ia.faceB, "B"
+        )
 
         self.show()
+    
+    def four_button_checkbox_layout(
+        self, parent,
+        placeX: int, placeY: int,
+        stickButton,    stickText: str,
+        bumperButton,   bumperText: str,
+        northButton,    northText: str,
+        westButton,     westText: str,
+        southButton,    southText: str,
+        eastButton,     eastText: str
+    ):
+        gapColumn: int = 40
+        gapRow: int = 27
+
+        bumperButtonCheck = ButtonCheckBox(bumperButton, bumperText, parent)
+        bumperButtonCheck.move(placeX + gapColumn, placeY)
+
+        northButtonCheck = ButtonCheckBox(northButton, northText, parent)
+        northButtonCheck.move(placeX + gapColumn, placeY + gapRow)
+
+        northButtonCheck = ButtonCheckBox(westButton, westText, parent)
+        northButtonCheck.move(placeX, int(placeY + gapRow * 2))
+
+        southButtonCheck = ButtonCheckBox(southButton, southText, parent)
+        southButtonCheck.move(placeX + gapColumn, placeY + int(gapRow * 3))
+
+        northButtonCheck = ButtonCheckBox(eastButton, eastText, parent)
+        northButtonCheck.move(placeX + int(gapColumn * 2), placeY + int(gapRow * 2))
+
+        stickButtonCheck = ButtonCheckBox(stickButton, stickText, parent)
+        stickButtonCheck.move(placeX + gapColumn, placeY + int(gapRow * 4))
 
 
 
@@ -70,7 +126,7 @@ class MainWindow(QMainWindow):
         self.show()
 
 def main():
-    inputaction.initialize_gamepad()
+    ia.initialize_gamepad()
 
     app = QApplication(sys.argv)
     window = ButtonWidget(None)
