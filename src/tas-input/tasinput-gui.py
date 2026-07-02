@@ -17,11 +17,13 @@ import inputaction as ia
 
 
 
-# class JoystickFrame(QSlider)
+# class JoystickFrame(QSlider):
 
-class ButtonCheckBox(QCheckBox): # you should've seen my face when this finally worked
-    def __init__(self, button, text, parent, **kwargs):
+class ButtonCheckBox(QCheckBox):
+    def __init__(self, placeX: int, placeY: int, button, text, parent, **kwargs):
         super().__init__(parent, **kwargs)
+
+        self.move(placeX, placeY)
 
         self.text = text
 
@@ -64,11 +66,19 @@ class ButtonWidget(QWidget):
             ia.dpadRight,   "D-Right"
         )
 
-        self.startButton = ButtonCheckBox(ia.menuStart, "Start", self)
-        self.startButton.move(menuButtonPosition, buttonLayoutStart + gapRow)
+        self.startButton = ButtonCheckBox(
+            menuButtonPosition,
+            buttonLayoutStart + gapRow,
+            ia.menuStart, "Start",
+            self
+        )
 
-        self.backButton = ButtonCheckBox(ia.menuBack, "Back", self)
-        self.backButton.move(menuButtonPosition, buttonLayoutStart + int(gapRow * 2))
+        self.backButton = ButtonCheckBox(
+            menuButtonPosition,
+            ( buttonLayoutStart + int(gapRow * 2) ),
+            ia.menuBack, "Back",
+            self
+        )
 
         self.faceButtons = self.four_button_checkbox_layout(
             self, 270, buttonLayoutStart,
@@ -81,7 +91,8 @@ class ButtonWidget(QWidget):
         )
 
         self.show()
-    
+
+    # this, along with other custom widgets, has GOT to go to its own module if possible
     def four_button_checkbox_layout(
         self, parent,
         placeX: int, placeY: int,
@@ -95,23 +106,44 @@ class ButtonWidget(QWidget):
         gapColumn: int = 40
         gapRow: int = 27
 
-        bumperButtonCheck = ButtonCheckBox(bumperButton, bumperText, parent)
-        bumperButtonCheck.move(placeX + gapColumn, placeY)
+        bumperButtonCheck = ButtonCheckBox(
+            (placeX + gapColumn), placeY,
+            bumperButton, bumperText,
+            parent
+        )
 
-        northButtonCheck = ButtonCheckBox(northButton, northText, parent)
-        northButtonCheck.move(placeX + gapColumn, placeY + gapRow)
+        northButtonCheck = ButtonCheckBox(
+            (placeX + gapColumn), (placeY + gapRow),
+            northButton, northText,
+            parent
+        )
+        
+        northButtonCheck = ButtonCheckBox(
+            placeX, int(placeY + gapRow * 2),
+            westButton, westText,
+            parent
+        )
 
-        northButtonCheck = ButtonCheckBox(westButton, westText, parent)
-        northButtonCheck.move(placeX, int(placeY + gapRow * 2))
+        southButtonCheck = ButtonCheckBox(
+            (placeX + gapColumn),
+            ( placeY + int(gapRow * 3) ),
+            southButton, southText,
+            parent
+        )
 
-        southButtonCheck = ButtonCheckBox(southButton, southText, parent)
-        southButtonCheck.move(placeX + gapColumn, placeY + int(gapRow * 3))
+        northButtonCheck = ButtonCheckBox(
+            (placeX + int(gapColumn * 2) ),
+            ( placeY + int(gapRow * 2) ),
+            eastButton, eastText,
+            parent
+        )
 
-        northButtonCheck = ButtonCheckBox(eastButton, eastText, parent)
-        northButtonCheck.move(placeX + int(gapColumn * 2), placeY + int(gapRow * 2))
-
-        stickButtonCheck = ButtonCheckBox(stickButton, stickText, parent)
-        stickButtonCheck.move(placeX + gapColumn, placeY + int(gapRow * 4))
+        stickButtonCheck = ButtonCheckBox(
+            (placeX + gapColumn),
+            ( placeY + int(gapRow * 4) ),
+            stickButton, stickText,
+            parent
+        )
 
 
 
